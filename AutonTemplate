@@ -21,6 +21,30 @@ public class AutomTemplate extends LinearOpMode {
         leftRear.setPower(power);
         rightFront.setPower(power);
         rightRear.setPower(power);
+        telemetry.addData("Action", "Moving Forward");
+        telemetry.update();
+        sleep(time);
+        stopMotors();
+    }
+
+    // Function to strafe left or right (Left is neagtive, Right is postitive) 
+    public void strafe(double power, int time) {
+        if (power < 0) {
+            // Strafe left
+            leftFront.setPower(-power);
+            leftRear.setPower(power);
+            rightFront.setPower(power);
+            rightRear.setPower(-power);
+            telemetry.addData("Action", "Strafing Left");
+        } else {
+            // Strafe right
+            leftFront.setPower(power);
+            leftRear.setPower(-power);
+            rightFront.setPower(-power);
+            rightRear.setPower(power);
+            telemetry.addData("Action", "Strafing Right");
+        }
+        telemetry.update();
         sleep(time);
         stopMotors();
     }
@@ -31,6 +55,8 @@ public class AutomTemplate extends LinearOpMode {
         leftRear.setPower(0);
         rightFront.setPower(0);
         rightRear.setPower(0);
+        telemetry.addData("Action", "Motors Stopped");
+        telemetry.update();
     }
 
     @Override
@@ -54,7 +80,13 @@ public class AutomTemplate extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        // Move forward for 2 seconds
-        forward(0.7, 2000);  // Move forward at 0.7 power for 2000 milliseconds (2 seconds)
+        // Example use: Move forward for 2 seconds
+        forward(0.2, 2000);  // Move forward at 0.2 power for 2000 milliseconds (2 seconds)
+        
+        // Example usage: Strafe left for 1 second
+        strafe(-0.5, 1000);  // Strafe left at -0.5 power for 1000 milliseconds (1 second)
+
+        // Example usage: Strafe right for 1 second
+        strafe(0.5, 1000);  // Strafe right at 0.5 power for 1000 milliseconds (1 second)
     }
 }
